@@ -1,0 +1,855 @@
+/* =====================================================================
+   Bloom Studio — pixel-house portfolio
+   Palette: sky blue · blush pink · sage green · cream
+   ===================================================================== */
+
+:root {
+  --sky: #71b1f3;
+  --cream: #fbeee6;
+  --blush: #fdd9dd;
+  --pink: #f4a3b3;
+  --rose: #d9607a;
+  --rose-dk: #b4455f;
+  --sage: #8ba58b;
+  --maroon: #4f282c;
+  --mauve: #815e61;
+  --font: "Pixelify Sans", "VT323", "Courier New", ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: var(--sky);
+  font-family: var(--font);
+  color: var(--maroon);
+  -webkit-font-smoothing: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------- loader ---------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--sky);
+  color: #fff;
+  font-size: 22px;
+  letter-spacing: .04em;
+  transition: opacity .6s steps(6), visibility 0s .6s;
+}
+
+.loader i {
+  font-style: normal;
+  animation: dots 1.2s steps(1) infinite;
+  opacity: 0;
+}
+
+.loader i:nth-child(2) {
+  animation-delay: .2s
+}
+
+.loader i:nth-child(3) {
+  animation-delay: .4s
+}
+
+@keyframes dots {
+
+  0%,
+  100% {
+    opacity: 0
+  }
+
+  30%,
+  70% {
+    opacity: 1
+  }
+}
+
+body.is-ready .loader {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---------- viewport & stage ---------- */
+.viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--sky);
+}
+
+/* The stage keeps the exact 1280 × 832 proportions of the Figma frame.
+   script.js sets its size & position so the house always fills the screen nicely. */
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1280px;
+  height: 832px;
+  background: var(--sky);
+  opacity: 0;
+  transition: opacity .8s steps(8);
+}
+
+body.is-ready .stage {
+  opacity: 1;
+}
+
+/* The illustration, placed exactly like in the design (image slightly larger than the frame) */
+.world {
+  position: absolute;
+  left: -2.03125%;
+  top: 5.5288%;
+  width: 102.03125%;
+  aspect-ratio: 1536/1024;
+  z-index: 1;
+}
+
+.layer {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  left: calc(var(--x) / 1536 * 100%);
+  top: calc(var(--y) / 1024 * 100%);
+  width: calc(var(--w) / 1536 * 100%);
+  height: calc(var(--h) / 1024 * 100%);
+}
+
+/* extended garden on both sides (wide screens) */
+.ext {
+  position: absolute;
+  top: 5.5288%;
+  width: 102.03125%;
+  aspect-ratio: 1536/1024;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ext--l {
+  left: -101.4%;
+}
+
+.ext--r {
+  left: 97.34%;
+}
+
+/* ---------- front door ---------- */
+.door {
+  perspective: 420px;
+}
+
+.door__in,
+.door__leaf {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.door__in {
+  opacity: 0;
+  transition: opacity .25s steps(3);
+}
+
+.door__leaf {
+  transform-origin: 100% 50%;
+  transition: transform .55s steps(8);
+}
+
+.stage.is-door .door__in {
+  opacity: 1;
+}
+
+.stage.is-door .door__leaf {
+  transform: rotateY(-72deg);
+}
+
+/* ---------- clouds: drift a little, then rest ---------- */
+.cloud {
+  animation: drift var(--dur) ease-in-out var(--delay) infinite;
+  will-change: transform;
+}
+
+@keyframes drift {
+
+  0%,
+  10% {
+    transform: translateX(0)
+  }
+
+  46%,
+  60% {
+    transform: translateX(var(--dx))
+  }
+
+  96%,
+  100% {
+    transform: translateX(0)
+  }
+}
+
+/* ---------- flowers, vines & blossoms: gentle sway ---------- */
+.sway {
+  transform-origin: var(--origin, 50% 100%);
+  animation: sway var(--dur) ease-in-out var(--delay) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(calc(var(--amp) * -1)) translateX(-1.2px)
+  }
+
+  to {
+    transform: rotate(var(--amp)) translateX(1.2px)
+  }
+}
+
+/* ---------- windows that swing open ---------- */
+.win {
+  opacity: 0;
+  transition: opacity .4s steps(6);
+}
+
+.win.is-open {
+  opacity: 1;
+}
+
+/* ---------- lantern glow ---------- */
+.glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  left: calc(var(--x) / 1536 * 100%);
+  top: calc(var(--y) / 1024 * 100%);
+  width: calc(var(--w) / 1536 * 100%);
+  height: calc(var(--h) / 1024 * 100%);
+  background: radial-gradient(circle, rgba(255, 214, 140, .75) 0%, rgba(255, 190, 110, .28) 38%, rgba(255, 190, 110, 0) 70%);
+  mix-blend-mode: screen;
+  opacity: .35;
+  animation: flicker 3.6s steps(9) infinite alternate;
+  transition: opacity .5s steps(6);
+}
+
+.stage.is-door .glow {
+  opacity: .9;
+}
+
+@keyframes flicker {
+  from {
+    transform: scale(.96)
+  }
+
+  to {
+    transform: scale(1.04)
+  }
+}
+
+/* ---------- hover / tap areas ---------- */
+.hot {
+  position: absolute;
+  z-index: 4;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  left: calc(var(--x) / 1536 * 100%);
+  top: calc(var(--y) / 1024 * 100%);
+  width: calc(var(--w) / 1536 * 100%);
+  height: calc(var(--h) / 1024 * 100%);
+  border-radius: 6px;
+}
+
+.hot:focus {
+  outline: none;
+}
+
+.hot:focus-visible {
+  outline: 3px dashed #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(217, 96, 122, .55);
+}
+
+.hot--peek {
+  cursor: default;
+}
+
+/* sparkle that invites you to hover */
+.hint {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  left: calc(var(--x) / 1536 * 100%);
+  top: calc(var(--y) / 1024 * 100%);
+  width: 1.6%;
+  aspect-ratio: 1/1;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 3px rgba(255, 170, 195, .95));
+  animation: twinkle 2.8s steps(5) infinite;
+}
+
+.hint--projects {
+  animation-delay: -.9s
+}
+
+.hint--connect {
+  animation-delay: -1.8s
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.4)
+  }
+
+  35%,
+  65% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1)
+  }
+}
+
+.stage[data-active] .hint,
+.stage.is-peek .hint {
+  opacity: 0;
+  animation: none;
+}
+
+/* ---------- birds & petals canvas ---------- */
+.fx {
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 300%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* =====================================================================
+   DIALOG BOXES
+   ===================================================================== */
+.dialog {
+  position: absolute;
+  z-index: 6;
+  left: calc(var(--x) / 1280 * 100%);
+  top: calc(var(--y) / 832 * 100%);
+  width: calc(var(--w) / 1280 * 100%);
+  container-type: inline-size;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(.94);
+  transform-origin: 50% 100%;
+  transition: opacity .28s steps(5), transform .28s steps(5), visibility 0s .28s;
+}
+
+.dialog.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.dialog--projects {
+  transform-origin: 30% 0%;
+}
+
+.dialog--skills {
+  transform-origin: 100% 40%;
+}
+
+.dialog--connect {
+  transform-origin: 100% 80%;
+}
+
+.dialog__frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 0 rgba(150, 70, 95, .16)) drop-shadow(0 14px 14px rgba(70, 35, 60, .18));
+}
+
+.dialog__body {
+  position: absolute;
+  inset: 0;
+  --u: calc(100cqw / var(--nw));
+  /* 1 "design pixel" of this box */
+  font-family: var(--font);
+}
+
+/* ---------- welcome ---------- */
+.dialog--welcome {
+  pointer-events: none;
+  z-index: 5;
+  transform-origin: 50% 100%;
+}
+
+.dialog--welcome.is-open {
+  pointer-events: none;
+}
+
+.welcome__line1,
+.welcome__line2 {
+  position: absolute;
+  left: calc(60 / 513 * 100%);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.welcome__line1 {
+  top: calc(88 / 202 * 100%);
+  font-size: calc(var(--u) * 19);
+  line-height: calc(var(--u) * 34);
+  font-weight: 600;
+  color: #674b4d;
+  min-height: calc(var(--u) * 34);
+}
+
+.welcome__line1::after {
+  content: "";
+  display: inline-block;
+  width: calc(var(--u) * 8);
+  height: calc(var(--u) * 16);
+  margin-left: calc(var(--u) * 3);
+  background: #674b4d;
+  vertical-align: -2px;
+  animation: caret 1s steps(1) infinite;
+}
+
+.welcome--done .welcome__line1::after {
+  display: none;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0
+  }
+}
+
+.welcome__line2 {
+  top: calc(124 / 202 * 100%);
+  font-size: calc(var(--u) * 13);
+  line-height: calc(var(--u) * 20);
+  color: var(--mauve);
+  opacity: 0;
+  transition: opacity .5s steps(5);
+}
+
+.welcome--done .welcome__line2 {
+  opacity: 1;
+}
+
+.welcome__next {
+  position: absolute;
+  left: calc(447 / 513 * 100%);
+  top: calc(150 / 202 * 100%);
+  width: calc(32 / 513 * 100%);
+  height: calc(26 / 202 * 100%);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 4px;
+}
+
+.welcome__next:hover,
+.welcome__next:focus-visible {
+  background: rgba(244, 163, 179, .35);
+  outline: none;
+}
+
+/* ---------- projects ---------- */
+.plist {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  left: calc(40 / 407 * 100%);
+  width: calc(326 / 407 * 100%);
+  top: calc(87 / 315 * 100%);
+  display: grid;
+  grid-auto-rows: calc(var(--u) * 36.3);
+}
+
+.plink {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 7);
+  height: 100%;
+  padding-left: calc(var(--u) * 33);
+  padding-right: calc(var(--u) * 6);
+  background: url("assets/img/bullet.webp") no-repeat calc(var(--u) * 6) 50% / calc(var(--u) * 14) auto;
+  border-radius: calc(var(--u) * 6);
+  text-decoration: none;
+  color: var(--maroon);
+  white-space: nowrap;
+  transition: background-color .12s steps(2);
+}
+
+.plink__name {
+  font-size: calc(var(--u) * 14.5);
+  font-weight: 600;
+  color: #4f282c;
+}
+
+.plink__sub {
+  font-size: calc(var(--u) * 11.5);
+  font-weight: 500;
+  color: #815e61;
+}
+
+.plink:hover,
+.plink:focus-visible {
+  background-color: var(--blush);
+  outline: none;
+}
+
+.plink:hover .plink__name,
+.plink:focus-visible .plink__name {
+  color: var(--rose-dk);
+  animation: nudge .5s steps(2) infinite alternate;
+}
+
+@keyframes nudge {
+  to {
+    transform: translateX(calc(var(--u) * 3))
+  }
+}
+
+/* ---------- skills ---------- */
+.skills__icon {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.skills__icon--laptop {
+  left: calc(37 / 350 * 100%);
+  top: calc(77 / 366 * 100%);
+  width: calc(29 / 350 * 100%);
+}
+
+.skills__icon--globe {
+  left: calc(33 / 350 * 100%);
+  top: calc(204 / 366 * 100%);
+  width: calc(33 / 350 * 100%);
+}
+
+.skills__group {
+  position: absolute;
+  left: calc(67 / 350 * 100%);
+  width: calc(262 / 350 * 100%);
+}
+
+.skills__group--1 {
+  top: calc(78 / 366 * 100%);
+}
+
+.skills__group--2 {
+  top: calc(208 / 366 * 100%);
+}
+
+.skills__head {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  height: calc(var(--u) * 22);
+  padding: 0 calc(var(--u) * 14) 0 calc(var(--u) * 22);
+  border-radius: calc(var(--u) * 11);
+  background: var(--blush);
+  font-size: calc(var(--u) * 15.5);
+  font-weight: 700;
+  color: #59292f;
+  white-space: nowrap;
+}
+
+.skills__head::before,
+.slist li::before {
+  content: "";
+  position: absolute;
+  background: url("assets/img/bullet.webp") center / contain no-repeat;
+}
+
+.skills__head::before {
+  left: calc(var(--u) * 3);
+  top: 50%;
+  width: calc(var(--u) * 12);
+  height: calc(var(--u) * 12);
+  transform: translateY(-50%);
+}
+
+.slist {
+  margin: calc(var(--u) * 4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slist li {
+  position: relative;
+  height: calc(var(--u) * 18.2);
+  display: flex;
+  align-items: center;
+  padding-left: calc(var(--u) * 24);
+  font-size: calc(var(--u) * 12);
+  font-weight: 500;
+  color: #6c444a;
+  white-space: nowrap;
+}
+
+.slist li::before {
+  left: calc(var(--u) * 3);
+  top: 50%;
+  width: calc(var(--u) * 10);
+  height: calc(var(--u) * 10);
+  transform: translateY(-50%);
+}
+
+/* ---------- connect ---------- */
+.connect__text {
+  position: absolute;
+  margin: 0;
+  left: calc(50 / 336 * 100%);
+  top: calc(88.5 / 335 * 100%);
+  font-size: calc(var(--u) * 11);
+  line-height: calc(var(--u) * 17);
+  color: #693c43;
+  font-weight: 500;
+}
+
+.connect__text span {
+  display: block;
+  white-space: nowrap;
+}
+
+.cbtn {
+  position: absolute;
+  display: block;
+  transition: transform .14s steps(2), filter .14s steps(2);
+}
+
+.cbtn img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cbtn--mail {
+  left: calc(82 / 336 * 100%);
+  top: calc(213 / 335 * 100%);
+  width: calc(56 / 336 * 100%);
+}
+
+.cbtn--github {
+  left: calc(139 / 336 * 100%);
+  top: calc(215 / 335 * 100%);
+  width: calc(60 / 336 * 100%);
+}
+
+.cbtn--linkedin {
+  left: calc(202 / 336 * 100%);
+  top: calc(213 / 335 * 100%);
+  width: calc(56 / 336 * 100%);
+}
+
+.cbtn--portfolio {
+  left: calc(84 / 336 * 100%);
+  top: calc(267 / 335 * 100%);
+  width: calc(168 / 336 * 100%);
+}
+
+.cbtn:hover,
+.cbtn:focus-visible {
+  transform: translateY(calc(var(--u) * -3));
+  outline: none;
+  filter: brightness(1.07) drop-shadow(0 calc(var(--u) * 3) 0 rgba(217, 96, 122, .35));
+}
+
+.cbtn:active {
+  transform: translateY(0);
+}
+
+/* ---------- close button (only shown on touch / small screens) ---------- */
+.dialog__close {
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: var(--rose) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath fill='%23fbeee6' d='M0 0h2v1h1v1h1V1h1V0h2v2H6v1H5v1h1v1h1v2H5V6H4V5H3v1H2v1H0V5h1V4h1V3H1V2H0z'/%3E%3C/svg%3E") center / 14px no-repeat;
+  box-shadow: 0 0 0 3px var(--rose-dk);
+  clip-path: polygon(0 3px, 3px 3px, 3px 0, calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px));
+  z-index: 2;
+}
+
+@media (hover:none) {
+  .dialog__close {
+    display: block;
+  }
+}
+
+/* =====================================================================
+   HUD — sound button & toast
+   ===================================================================== */
+.hud {
+  position: fixed;
+  z-index: 50;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+}
+
+.pxbtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border: 0;
+  padding: 9px 14px 9px 12px;
+  background: var(--rose-dk);
+  color: var(--maroon);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+  filter: drop-shadow(0 3px 0 rgba(120, 50, 75, .35));
+}
+
+.pxbtn::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--cream);
+  z-index: 0;
+  clip-path: polygon(0 3px, 3px 3px, 3px 0, calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px));
+}
+
+.pxbtn>* {
+  position: relative;
+  z-index: 1;
+}
+
+.pxbtn__icon {
+  width: 22px;
+  height: 18px;
+  color: var(--rose);
+}
+
+.pxbtn[aria-pressed="false"] .waves {
+  opacity: .18;
+}
+
+.pxbtn:hover {
+  background: var(--rose);
+}
+
+.pxbtn:focus-visible {
+  outline: 3px dashed #fff;
+  outline-offset: 3px;
+}
+
+.pxbtn.is-nudging .pxbtn__icon {
+  animation: bob 1s steps(2) infinite;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-2px)
+  }
+}
+
+.toast {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  transform: translate(-50%, 14px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 10px 16px;
+  background: var(--cream);
+  color: var(--maroon);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 0 0 3px var(--rose), 0 0 0 6px var(--cream), 0 6px 0 6px rgba(120, 50, 75, .25);
+  transition: opacity .25s steps(4), transform .25s steps(4);
+}
+
+.toast.is-show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* =====================================================================
+   COMPACT MODE (phones / portrait): boxes slide in from the sky at the top
+   ===================================================================== */
+body.is-compact .dialog {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  top: max(14px, env(safe-area-inset-top));
+  width: min(92vw, calc(56vh * var(--ar)), 520px);
+  transform: translate(-50%, -12px) scale(.96);
+  transform-origin: 50% 0;
+}
+
+body.is-compact .dialog.is-open {
+  transform: translate(-50%, 0);
+}
+
+body.is-compact .dialog--welcome {
+  width: min(94vw, 520px);
+  top: max(70px, env(safe-area-inset-top));
+}
+
+body.is-compact .hud {
+  top: auto;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: max(14px, env(safe-area-inset-left));
+  right: auto;
+}
+
+body.is-compact .dialog__close {
+  display: block;
+}
+
+/* ---------- accessibility ----------
+   (Animations are gentle ambient motion, so they stay on. To honour
+   Windows' "reduce motion" setting, add a prefers-reduced-motion block here.) */

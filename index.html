@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bloom Studio 🍁</title>
+  <meta name="description"
+    content="Jannat-E-Nur Lisa — web developer portfolio. Step into the little pixel house to see projects, skills and ways to connect.">
+  <meta name="theme-color" content="#71b1f3">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Pixel font (needs internet). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Little pixel sparkle used as a hover hint on the windows & door -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="px-sparkle" viewBox="0 0 7 7" shape-rendering="crispEdges">
+      <path fill="#ffffff" d="M3 0h1v2H3zM3 5h1v2H3zM0 3h2v1H0zM5 3h2v1H5zM2 2h3v3H2z" />
+      <path fill="#f4a3b3" d="M3 3h1v1H3z" />
+    </symbol>
+    <symbol id="px-speaker" viewBox="0 0 11 9" shape-rendering="crispEdges">
+      <path fill="currentColor" d="M0 3h2V2h1V1h1v7H3V7H2V6H0z" />
+      <path class="waves" fill="currentColor" d="M6 3h1v3H6zM8 2h1v5H8zM10 1h1v7h-1z" />
+    </symbol>
+  </svg>
+
+  <div class="loader" id="loader" role="status"><span>Watering the garden<i>.</i><i>.</i><i>.</i></span></div>
+
+  <div class="viewport" id="viewport">
+
+    <!-- ============================ THE STAGE (1280 × 832 design) ============================ -->
+    <main class="stage" id="stage" data-active="">
+
+      <!-- Extended garden on both sides (wide screens get more sky, hedge & fence) -->
+      <div class="ext ext--l" aria-hidden="true">
+        <img class="layer" src="assets/img/ext-l.webp" alt="" draggable="false" style="--x:0;--y:0;--w:1536;--h:1024">
+        <img class="layer cloud" src="assets/img/cloud-09.webp" alt="" draggable="false"
+          style="--x:940;--y:100;--w:289;--h:138;--dx:33%;--dur:70s;--delay:-40s">
+        <img class="layer cloud" src="assets/img/cloud-04.webp" alt="" draggable="false"
+          style="--x:600;--y:300;--w:239;--h:94;--dx:-46%;--dur:80s;--delay:-90s">
+        <img class="layer cloud" src="assets/img/cloud-08.webp" alt="" draggable="false"
+          style="--x:330;--y:140;--w:274;--h:129;--dx:44%;--dur:75s;--delay:-20s">
+        <img class="layer cloud" src="assets/img/cloud-00.webp" alt="" draggable="false"
+          style="--x:1180;--y:330;--w:199;--h:106;--dx:-53%;--dur:65s;--delay:-60s">
+        <img class="layer cloud" src="assets/img/cloud-02.webp" alt="" draggable="false"
+          style="--x:820;--y:330;--w:176;--h:82;--dx:57%;--dur:60s;--delay:-30s">
+      </div>
+      <div class="ext ext--r" aria-hidden="true">
+        <img class="layer" src="assets/img/ext-r.webp" alt="" draggable="false" style="--x:0;--y:0;--w:1536;--h:1024">
+        <img class="layer cloud" src="assets/img/cloud-07.webp" alt="" draggable="false"
+          style="--x:250;--y:70;--w:332;--h:168;--dx:30%;--dur:72s;--delay:-50s">
+        <img class="layer cloud" src="assets/img/cloud-06.webp" alt="" draggable="false"
+          style="--x:600;--y:260;--w:327;--h:89;--dx:-32%;--dur:78s;--delay:-100s">
+        <img class="layer cloud" src="assets/img/cloud-10.webp" alt="" draggable="false"
+          style="--x:900;--y:100;--w:386;--h:130;--dx:28%;--dur:68s;--delay:-35s">
+        <img class="layer cloud" src="assets/img/cloud-03.webp" alt="" draggable="false"
+          style="--x:170;--y:320;--w:200;--h:121;--dx:48%;--dur:62s;--delay:-15s">
+        <img class="layer cloud" src="assets/img/cloud-04.webp" alt="" draggable="false"
+          style="--x:1100;--y:300;--w:263;--h:104;--dx:-42%;--dur:76s;--delay:-70s">
+        <img class="layer cloud" src="assets/img/cloud-01.webp" alt="" draggable="false"
+          style="--x:560;--y:170;--w:86;--h:43;--dx:99%;--dur:55s;--delay:-80s">
+      </div>
+
+      <!-- WORLD = the house illustration; every layer is positioned in original image pixels (1536 × 1024) -->
+      <div class="world" id="world">
+
+        <img class="layer base" id="base" src="assets/img/house.webp"
+          alt="A two-storey pixel-art cottage with a rose garden, a blue sky and drifting clouds" draggable="false"
+          style="--x:0;--y:0;--w:1536;--h:1024">
+
+        <!-- Drifting clouds -->
+        <img class="layer cloud" src="assets/img/cloud-07.webp" alt="" draggable="false"
+          style="--x:10;--y:28;--w:415;--h:210;--dx:27%;--dur:74s;--delay:-55s">
+        <img class="layer cloud" src="assets/img/cloud-06.webp" alt="" draggable="false"
+          style="--x:470;--y:22;--w:454;--h:112;--dx:-25%;--dur:80s;--delay:-30s">
+        <img class="layer cloud" src="assets/img/cloud-10.webp" alt="" draggable="false"
+          style="--x:1195;--y:28;--w:302;--h:130;--dx:-33%;--dur:66s;--delay:-70s">
+        <img class="layer cloud" src="assets/img/cloud-11.webp" alt="" draggable="false"
+          style="--x:1270;--y:262;--w:252;--h:159;--dx:20%;--dur:70s;--delay:-20s">
+        <img class="layer cloud" src="assets/img/cloud-03.webp" alt="" draggable="false"
+          style="--x:40;--y:300;--w:222;--h:134;--dx:45%;--dur:64s;--delay:-85s">
+        <img class="layer cloud" src="assets/img/cloud-05.webp" alt="" draggable="false"
+          style="--x:235;--y:462;--w:210;--h:94;--dx:-52%;--dur:58s;--delay:-45s">
+        <img class="layer cloud" src="assets/img/cloud-01.webp" alt="" draggable="false"
+          style="--x:905;--y:104;--w:72;--h:36;--dx:-97%;--dur:60s;--delay:-65s">
+
+        <!-- Swaying flowers, vines & blossoms -->
+        <img class="layer sway" src="assets/img/sway-lfence.webp" alt="" draggable="false"
+          style="--x:0;--y:872;--w:466;--h:128;--origin:50% 100%;--amp:0.7deg;--dur:5.5s;--delay:-1s">
+        <img class="layer sway" src="assets/img/sway-rfence.webp" alt="" draggable="false"
+          style="--x:866;--y:858;--w:670;--h:142;--origin:50% 100%;--amp:0.7deg;--dur:6.2s;--delay:-2.4s">
+        <img class="layer sway" src="assets/img/sway-cherry.webp" alt="" draggable="false"
+          style="--x:1296;--y:462;--w:370;--h:268;--origin:50% 100%;--amp:0.9deg;--dur:8s;--delay:-3s">
+        <img class="layer sway" src="assets/img/sway-pots.webp" alt="" draggable="false"
+          style="--x:498;--y:722;--w:294;--h:90;--origin:50% 100%;--amp:1.3deg;--dur:4.8s;--delay:-0.5s">
+        <img class="layer sway" src="assets/img/sway-bench.webp" alt="" draggable="false"
+          style="--x:1378;--y:752;--w:122;--h:116;--origin:50% 100%;--amp:1.0deg;--dur:5.2s;--delay:-1.7s">
+        <img class="layer sway" src="assets/img/sway-vineR.webp" alt="" draggable="false"
+          style="--x:1152;--y:180;--w:110;--h:610;--origin:50% 0%;--amp:0.8deg;--dur:9s;--delay:-4s">
+        <img class="layer sway" src="assets/img/sway-vineM.webp" alt="" draggable="false"
+          style="--x:768;--y:340;--w:84;--h:450;--origin:50% 0%;--amp:0.9deg;--dur:8s;--delay:-2s">
+        <img class="layer sway" src="assets/img/sway-bushL.webp" alt="" draggable="false"
+          style="--x:425;--y:850;--w:100;--h:85;--origin:50% 100%;--amp:1.5deg;--dur:4.5s;--delay:-3.1s">
+
+        <!-- Windows that open on hover (shutters swing open) -->
+        <img class="layer win win--ul" src="assets/img/win-ul.webp" alt="" draggable="false"
+          style="--x:548;--y:392;--w:202;--h:153">
+        <img class="layer win win--ur" src="assets/img/win-ur.webp" alt="" draggable="false"
+          style="--x:850;--y:372;--w:300;--h:123">
+        <img class="layer win win--lr" src="assets/img/win-lr.webp" alt="" draggable="false"
+          style="--x:850;--y:618;--w:300;--h:192">
+
+        <!-- The front door: swings open on hover, showing a cosy room -->
+        <div class="layer door" style="--x:610;--y:628;--w:91;--h:193">
+          <img class="door__in" src="assets/img/door-inside.webp" alt="" draggable="false">
+          <img class="door__leaf" src="assets/img/door-leaf.webp" alt="" draggable="false">
+        </div>
+
+        <!-- Warm lantern glow beside the door -->
+        <div class="glow glow--lantern" style="--x:480;--y:560;--w:180;--h:180"></div>
+
+        <!-- Invisible hover / tap areas. Each one is a real button so keyboard & screen-reader users can use them too. -->
+        <button class="hot hot--skills" data-target="skills" style="--x:570;--y:400;--w:146;--h:134"
+          aria-controls="dlg-skills" aria-expanded="false" aria-label="Skills — open the upper left window"></button>
+        <button class="hot hot--projects" data-target="projects" style="--x:910;--y:376;--w:170;--h:112"
+          aria-controls="dlg-projects" aria-expanded="false"
+          aria-label="Projects — open the upper right window"></button>
+        <button class="hot hot--connect" data-target="connect" style="--x:606;--y:626;--w:98;--h:200"
+          aria-controls="dlg-connect" aria-expanded="false" aria-label="Connect with me — the front door"></button>
+        <button class="hot hot--peek" data-target="peek" style="--x:896;--y:624;--w:190;--h:180"
+          aria-label="The downstairs window (just for a peek)" tabindex="-1"></button>
+
+        <!-- Sparkle hints -->
+        <svg class="hint hint--skills" style="--x:642;--y:458" aria-hidden="true">
+          <use href="#px-sparkle" />
+        </svg>
+        <svg class="hint hint--projects" style="--x:993;--y:428" aria-hidden="true">
+          <use href="#px-sparkle" />
+        </svg>
+        <svg class="hint hint--connect" style="--x:657;--y:700" aria-hidden="true">
+          <use href="#px-sparkle" />
+        </svg>
+      </div>
+
+      <!-- Birds, falling petals (chunky pixel canvas) -->
+      <canvas class="fx" id="fx" width="960" height="208" aria-hidden="true"></canvas>
+
+      <!-- ============================ DIALOG BOXES ============================ -->
+
+      <!-- Welcome -->
+      <section class="dialog dialog--welcome is-open" id="dlg-welcome" style="--x:181;--y:505;--w:437;--ar:2.54"
+        aria-label="Welcome">
+        <img class="dialog__frame" src="assets/img/popup-welcome.webp" alt="" draggable="false">
+        <div class="dialog__body" style="--nw:513">
+          <p class="welcome__line1" id="welcome-type" data-text="Welcome to Bloom studio...">Welcome to Bloom studio...
+          </p>
+          <p class="welcome__line2">Hover over the windows &amp; the door to look around.</p>
+          <button class="welcome__next" id="welcome-next" type="button" aria-label="Dismiss welcome message"></button>
+        </div>
+      </section>
+
+      <!-- SKILLS  (upper left window — the one above the door) -->
+      <section class="dialog dialog--skills" id="dlg-skills" style="--x:20;--y:240;--w:410;--ar:0.956" role="dialog"
+        aria-label="Skills">
+        <img class="dialog__frame" src="assets/img/popup-skills.webp" alt="" draggable="false">
+        <div class="dialog__body" style="--nw:350">
+          <img class="skills__icon skills__icon--laptop" src="assets/img/icon-laptop.webp" alt="" draggable="false">
+          <img class="skills__icon skills__icon--globe" src="assets/img/icon-globe.webp" alt="" draggable="false">
+
+          <div class="skills__group skills__group--1">
+            <h2 class="skills__head">Frontend</h2>
+            <ul class="slist">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>Responsive Design</li>
+              <li>Git &amp; GitHub</li>
+            </ul>
+          </div>
+
+          <div class="skills__group skills__group--2">
+            <h2 class="skills__head">Web Development</h2>
+            <ul class="slist">
+              <li>Responsive Design</li>
+              <li>Mobile-Friendly Layouts</li>
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>VS Code</li>
+            </ul>
+          </div>
+        </div>
+        <button class="dialog__close" type="button" data-close aria-label="Close Skills"></button>
+      </section>
+
+      <!-- PROJECTS  (upper front window) -->
+      <section class="dialog dialog--projects" id="dlg-projects" style="--x:730;--y:392;--w:540;--ar:1.292"
+        role="dialog" aria-label="Projects">
+        <img class="dialog__frame" src="assets/img/popup-projects.webp" alt="" draggable="false">
+        <div class="dialog__body" style="--nw:407">
+          <!-- ✏️  Each project: change the name / subtitle here. Put the live link in links.js (data-link = the key used there). -->
+          <ul class="plist">
+            <li><a class="plink" data-link="moonlit" href="#" target="_blank" rel="noopener noreferrer"><span
+                  class="plink__name">Moonlit</span><span class="plink__sub">— Live Moon Phase Tracker</span></a></li>
+            <li><a class="plink" data-link="sqaPortfolio" href="#" target="_blank" rel="noopener noreferrer"><span
+                  class="plink__name">Client's SQA Portfolio</span><span class="plink__sub">— Coder Theme</span></a>
+            </li>
+            <li><a class="plink" data-link="moonHours" href="#" target="_blank" rel="noopener noreferrer"><span
+                  class="plink__name">Moon Hours</span><span class="plink__sub">— Personal Blog</span></a></li>
+            <li><a class="plink" data-link="personalPortfolioSite" href="#" target="_blank"
+                rel="noopener noreferrer"><span class="plink__name">Client's Portfolio</span></a></li>
+            <li><a class="plink" data-link="personalPortfolioDemo" href="#" target="_blank"
+                rel="noopener noreferrer"><span class="plink__name">Demo Portfolio</span><span class="plink__sub">—
+                  UI Demo</span></a></li>
+          </ul>
+        </div>
+        <button class="dialog__close" type="button" data-close aria-label="Close Projects"></button>
+      </section>
+
+      <!-- CONNECT WITH ME  (the front door) -->
+      <section class="dialog dialog--connect" id="dlg-connect" style="--x:18;--y:300;--w:420;--ar:1.003" role="dialog"
+        aria-label="Connect with me">
+        <img class="dialog__frame" src="assets/img/popup-connect.webp" alt="" draggable="false">
+        <div class="dialog__body" style="--nw:336">
+          <p class="connect__text">
+            <span>Hi, Lisa here.</span>
+            <span>I’m actively looking for web</span>
+            <span>development opportunities,</span>
+            <span>internships, and freelance work.</span>
+            <span>I also bring a data background</span>
+            <span>to projects that need both,</span>
+            <span>design sense and analytical thinking.</span>
+            <span>Feel free to reach out.</span>
+          </p>
+          <!-- ✏️  Add the real links in links.js -->
+          <a class="cbtn cbtn--mail" data-link="email" href="#" aria-label="Email me"><img
+              src="assets/img/btn-mail.webp" alt="" draggable="false"></a>
+          <a class="cbtn cbtn--github" data-link="github" href="#" target="_blank" rel="noopener noreferrer"
+            aria-label="My GitHub"><img src="assets/img/btn-github.webp" alt="" draggable="false"></a>
+          <a class="cbtn cbtn--linkedin" data-link="linkedin" href="#" target="_blank" rel="noopener noreferrer"
+            aria-label="My LinkedIn"><img src="assets/img/btn-linkedin.webp" alt="" draggable="false"></a>
+          <a class="cbtn cbtn--portfolio" data-link="portfolio" href="#" target="_blank" rel="noopener noreferrer"
+            aria-label="Open my portfolio"><img src="assets/img/btn-portfolio.webp" alt="" draggable="false"></a>
+        </div>
+        <button class="dialog__close" type="button" data-close aria-label="Close Connect with me"></button>
+      </section>
+
+    </main>
+
+    <!-- Sound toggle + tiny toast -->
+    <div class="hud">
+      <button class="pxbtn" id="sound" type="button" aria-pressed="false" aria-label="Toggle background sound">
+        <svg class="pxbtn__icon" viewBox="0 0 11 9" aria-hidden="true">
+          <use href="#px-speaker" />
+        </svg>
+        <span class="pxbtn__label" id="sound-label">Sound off</span>
+      </button>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <audio id="bgm" src="assets/audio/ambient.mp3" loop preload="auto"></audio>
+
+  <noscript>
+    <p style="position:fixed;inset:auto 0 12px;text-align:center;font:16px sans-serif;color:#fff">This little house
+      needs JavaScript to open its windows.</p>
+  </noscript>
+
+  <script src="links.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
