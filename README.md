@@ -18,7 +18,7 @@ Open `index.html` in a browser.
 | `script.js` | Hover/tap logic, birds, falling petals, sound |
 | `links.js` | ✏️ **All links live here** (email, GitHub, LinkedIn, Portfolio, 5 projects) |
 | `assets/img/` | House, clouds, flowers, window and dialog images cut from the Figma SVG |
-| `assets/audio/ambient.mp3` | Soft music + wind + birds loop (replace with your own file, same name) |
+| `assets/audio/ambient.mp3` | Soft music + wind + birds loop (replaceg file, same name) |
 
 ## 🏠 How It Works
 
@@ -26,4 +26,3 @@ Open `index.html` in a browser.
 - **Upper front window** → Projects
 - **Front door** → Connect with me
 
-Text in the boxes is real HTML in `index.html`, so edit project names and skills there.
